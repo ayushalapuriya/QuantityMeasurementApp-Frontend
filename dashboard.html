@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quantity Measurement App | Dashboard</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="dashboard-page" data-page="dashboard">
+    <header class="navbar">
+      <div class="brand">Quantity Measurement</div>
+      <button id="logoutBtn" class="btn btn-ghost" type="button">Logout</button>
+    </header>
+
+    <main class="dashboard-layout">
+      <section class="panel convert-panel" aria-labelledby="convert-title">
+        <h2 id="convert-title">Convert Quantity</h2>
+        <p class="panel-subtitle">Select a conversion type and enter a value.</p>
+
+        <form id="convertForm" class="form" novalidate>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="conversionType">Conversion Type</label>
+              <select id="conversionType" name="type" required>
+                <option value="meterToFeet">Meter to Feet</option>
+                <option value="feetToMeter">Feet to Meter</option>
+                <option value="kgToPounds">Kg to Pounds</option>
+                <option value="poundsToKg">Pounds to Kg</option>
+                <option value="literToGallon">Liter to Gallon</option>
+                <option value="gallonToLiter">Gallon to Liter</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="inputValue">Input Value</label>
+              <input
+                id="inputValue"
+                name="value"
+                type="number"
+                placeholder="Enter quantity"
+                step="any"
+                required
+              />
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Convert</button>
+          <output id="convertMessage" class="form-message" aria-live="polite"></output>
+        </form>
+      </section>
+
+      <section class="panel result-panel" aria-labelledby="result-title">
+        <h2 id="result-title">Conversion Result</h2>
+        <p class="panel-subtitle">Your latest conversion appears below.</p>
+
+        <article id="resultCard" class="result-card" aria-live="polite">
+          <p class="result-placeholder">No conversion yet. Enter a value and click convert.</p>
+        </article>
+      </section>
+    </main>
+
+    <script src="script.js" defer></script>
+  </body>
+</html>
