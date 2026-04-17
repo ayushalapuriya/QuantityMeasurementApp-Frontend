@@ -1,43 +1,42 @@
 import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
-import HistoryIcon from "@mui/icons-material/History";
 import LoginIcon from "@mui/icons-material/Login";
-import { useNavigate } from "react-router-dom";
+import HistoryIcon from "@mui/icons-material/History";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import { useNavigate, useLocation } from "react-router-dom";
 import { isGuest, removeToken } from "../utils/auth";
 
 function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
     removeToken();
-    localStorage.removeItem("mode"); // clear guest mode if any
+    localStorage.removeItem("mode");
     navigate("/");
   };
+
+  const isHistoryPage = location.pathname === "/history";
 
   return (
     <AppBar position="static" elevation={3}>
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        {/* App Title */}
         <Typography
           variant="h6"
-          sx={{
-            fontWeight: "bold",
-            letterSpacing: 0.5,
-          }}
+          sx={{ fontWeight: "bold", letterSpacing: 0.5 }}
         >
           Quantity Measurement App
         </Typography>
 
-        {/* Right Side Buttons */}
         <Box>
           {isGuest() ? (
-            // 👤 Guest Mode → Show Login Button
+            // 👤 Guest Mode
             <Button
               variant="outlined"
               color="inherit"
-              startIcon={<LoginIcon />}
+              startIcon={<LoginIcon />} // 👈 Adds icon to the left
               onClick={() => {
-                localStorage.removeItem("mode"); // exit guest mode
+                localStorage.removeItem("mode");
                 navigate("/");
               }}
               sx={{
@@ -51,18 +50,34 @@ function Navbar() {
               Login
             </Button>
           ) : (
-            // 🔐 Logged-in Mode → Show History + Logout
             <>
-              <Button
-                variant="outlined"
-                color="inherit"
-                startIcon={<HistoryIcon />}
-                onClick={() => navigate("/history")}
-                sx={{ borderColor: "white", mr: 2 }}
-              >
-                History
-              </Button>
+              {/* 🔁 Dashboard button ONLY on history page */}
+              {isHistoryPage && (
+                <Button
+                  variant="outlined"
+                  color="inherit"
+                  startIcon={<DashboardIcon />}
+                  onClick={() => navigate("/dashboard")}
+                  sx={{ borderColor: "white", mr: 2 }}
+                >
+                  Dashboard
+                </Button>
+              )}
 
+              {/* 📜 History Button */}
+              {!isHistoryPage && (
+                <Button
+                  variant="outlined"
+                  color="inherit"
+                  startIcon={<HistoryIcon />}
+                  onClick={() => navigate("/history")}
+                  sx={{ borderColor: "white", mr: 2 }}
+                >
+                  History
+                </Button>
+              )}
+
+              {/* 🚪 Logout */}
               <Button
                 variant="outlined"
                 color="inherit"
