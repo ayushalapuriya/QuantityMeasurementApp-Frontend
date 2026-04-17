@@ -13,3 +13,7 @@ export const removeToken = () => {
 export const isAuthenticated = () => {
   return !!getToken();
 };
+
+export const getMode = () => localStorage.getItem("mode");
+
+export const isGuest = () => getMode() === "GUEST";

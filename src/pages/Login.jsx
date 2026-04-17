@@ -11,14 +11,14 @@ import {
   Alert,
   CircularProgress,
   InputAdornment,
-  IconButton
+  IconButton,
 } from "@mui/material";
 import {
   Email,
   Lock,
   Google,
   Visibility,
-  VisibilityOff
+  VisibilityOff,
 } from "@mui/icons-material";
 import { useNavigate, Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -31,7 +31,7 @@ function Login() {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm();
 
   const [loading, setLoading] = useState(false);
@@ -40,7 +40,7 @@ function Login() {
   const [snackbar, setSnackbar] = useState({
     open: false,
     message: "",
-    severity: "error"
+    severity: "error",
   });
 
   const onSubmit = async (data) => {
@@ -53,11 +53,10 @@ function Login() {
       setSnackbar({
         open: true,
         message: "Login successful!",
-        severity: "success"
+        severity: "success",
       });
 
       setTimeout(() => navigate("/dashboard"), 1000);
-
     } catch (error) {
       setSnackbar({
         open: true,
@@ -65,7 +64,7 @@ function Login() {
           error.response?.status === 401
             ? "Invalid email or password"
             : "Something went wrong",
-        severity: "error"
+        severity: "error",
       });
     } finally {
       setLoading(false);
@@ -88,8 +87,8 @@ function Login() {
               required: "Email is required",
               pattern: {
                 value: /^\S+@\S+$/i,
-                message: "Invalid email format"
-              }
+                message: "Invalid email format",
+              },
             })}
             error={!!errors.email}
             helperText={errors.email?.message}
@@ -98,7 +97,7 @@ function Login() {
                 <InputAdornment position="start">
                   <Email />
                 </InputAdornment>
-              )
+              ),
             }}
           />
 
@@ -111,8 +110,8 @@ function Login() {
               required: "Password is required",
               minLength: {
                 value: 6,
-                message: "Minimum 6 characters"
-              }
+                message: "Minimum 6 characters",
+              },
             })}
             error={!!errors.password}
             helperText={errors.password?.message}
@@ -131,7 +130,7 @@ function Login() {
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
-              )
+              ),
             }}
           />
 
@@ -159,6 +158,20 @@ function Login() {
             Continue with Google
           </Button>
 
+          <Button
+            variant="outlined"
+            fullWidth
+            sx={{ mt: 2 }}
+            onClick={() => {
+              localStorage.setItem("mode", "GUEST");
+              localStorage.removeItem("token");
+
+              navigate("/dashboard");
+            }}
+          >
+            Continue as Guest
+          </Button>
+
           <Typography sx={{ mt: 2 }} align="center">
             Don’t have an account? <Link to="/signup">Signup</Link>
           </Typography>
@@ -170,9 +183,7 @@ function Login() {
         autoHideDuration={3000}
         onClose={() => setSnackbar({ ...snackbar, open: false })}
       >
-        <Alert severity={snackbar.severity}>
-          {snackbar.message}
-        </Alert>
+        <Alert severity={snackbar.severity}>{snackbar.message}</Alert>
       </Snackbar>
     </Container>
   );

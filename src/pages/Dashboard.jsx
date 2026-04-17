@@ -23,6 +23,7 @@ import {
   compareMeasurement,
   arithmeticMeasurement,
 } from "../api/measurementApi";
+// import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const [selectedType, setSelectedType] = useState("LENGTH");
@@ -36,6 +37,8 @@ function Dashboard() {
     resultUnit: "FEET",
     operator: "ADD",
   });
+
+  // const navigate = useNavigate();
 
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);

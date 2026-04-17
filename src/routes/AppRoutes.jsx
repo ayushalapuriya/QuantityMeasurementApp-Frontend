@@ -5,6 +5,7 @@ import Dashboard from "../pages/Dashboard";
 import OAuthSuccess from "../pages/OAuthSuccess";
 import ProtectedRoute from "../components/ProtectedRoute";
 import MainLayout from "../components/MainLayout";
+import History from "../pages/History";
 
 function AppRoutes() {
   return (
@@ -24,6 +25,7 @@ function AppRoutes() {
           }
         >
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/history" element={<History />} />
         </Route>
       </Routes>
     </BrowserRouter>

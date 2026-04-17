@@ -1,10 +1,11 @@
 import { Navigate } from "react-router-dom";
-import { getToken } from "../utils/auth";
+import { getToken, isGuest } from "../utils/auth";
 
 function ProtectedRoute({ children }) {
   const token = getToken();
 
-  if (!token) {
+  // ✅ Allow if logged in OR guest
+  if (!token && !isGuest()) {
     return <Navigate to="/" replace />;
   }
 

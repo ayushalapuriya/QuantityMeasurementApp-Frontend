@@ -1,15 +1,31 @@
 import axios from "axios";
 import { getToken } from "../utils/auth";
+import { isGuest } from "../utils/auth";
 
 const axiosInstance = axios.create({
   baseURL: "http://localhost:8080",
 });
 
-axiosInstance.interceptors.request.use((config) => {
-  const token = getToken();
+// axiosInstance.interceptors.request.use((config) => {
+//   const token = getToken();
 
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+//   if (token) {
+//     config.headers.Authorization = `Bearer ${token}`;
+//   }
+
+//   return config;
+// });
+
+
+
+axiosInstance.interceptors.request.use((config) => {
+  if (!isGuest()) {
+    const token = getToken();
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+  } else {
+    delete config.headers.Authorization; // 🔥 critical
   }
 
   return config;
